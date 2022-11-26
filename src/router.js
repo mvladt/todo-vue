@@ -2,29 +2,30 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import store from "./store.js";
 
 import Todo from "./pages/Todo.vue";
-import Login from "./pages/Login.vue";
+import AuthForm from "./pages/AuthForm.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: "/", component: Todo },
-    { path: "/login", component: Login },
+    { path: "/signin", component: AuthForm },
+    { path: "/signup", component: AuthForm },
     {
-      path: "/logout",
+      path: "/signout",
       component: Todo,
       beforeEnter: () => {
-        store.commit("setAuth", false);
-        return "/login";
+        store.commit("setToken", false);
+        return "/signin";
       },
     },
   ],
 });
 
 router.beforeEach((to, from) => {
-  const isAuth = store.getters.getAuth;
-  if (!isAuth && to.path !== "/login" && to.path !== "/logout") {
+  const isAuth = store.getters.getToken;
+  if (!isAuth && !["/signin", "/signup", "/signout"].includes(to.path)) {
     alert("Необходимо авторизоваться");
-    return "/login";
+    return "/signin";
   }
 });
 

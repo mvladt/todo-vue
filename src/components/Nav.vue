@@ -4,17 +4,21 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 
-const auth = computed(() => store.getters.getAuth);
-</script>
+const token = computed(() => store.getters.getToken); 
+// TODO: как сделать computed из стороннего js-объекта, например из кастомного стора
+</script>                                           
 
 <template>
   <div id="navigation">
     <RouterLink to="/">Todo</RouterLink> |
-    <span v-if="!auth">
-      <RouterLink to="/login">Login</RouterLink> |
+    <span v-if="!token">
+      <RouterLink to="/signin">Signin</RouterLink> |
     </span>
-    <span v-if="auth">
-      <RouterLink to="/logout">Logout</RouterLink> |
+    <span v-if="!token">
+      <RouterLink to="/signup">Signup</RouterLink> |
+    </span>
+    <span v-if="token">
+      <RouterLink to="/signout">Signout</RouterLink> |
     </span>
   </div>
 </template>

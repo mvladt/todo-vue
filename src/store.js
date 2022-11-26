@@ -2,14 +2,16 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    auth: false,
+    token: false, 
   },
   actions: {},
   getters: {
-    getAuth: (state) => state.auth,
+    getToken: (state) => state.token,
   },
   mutations: {
-    setAuth: (state, auth) => (state.auth = auth),
+    setToken: (state, token) => {
+      state.token = token;
+    },
   },
 });
 

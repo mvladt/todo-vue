@@ -8,18 +8,26 @@ import Nav from "./components/Nav.vue";
 const todos = ref([]);
 const store = useStore();
 
-todoApi.getAll().then(response => todos.value = response);
+todoApi.getAll().then(todos => todos.value = todos);
 
-const auth = computed(() => {
-  return store.getters.getAuth;
+const token = computed(() => {
+  return store.getters.getToken;
 })
 
 provide("todos", todos);
 </script>
 
 <template>
-  <div id="main">
-    <Nav /><br />
-    <RouterView />
-  </div>
+  <Nav /><br />
+  <RouterView />
 </template>
+
+<style>
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+}
+</style>

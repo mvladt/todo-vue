@@ -4,8 +4,9 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 
-const token = computed(() => store.getters.getToken); 
 // TODO: как сделать computed из стороннего js-объекта, например из кастомного стора
+const token = computed(() => store.getters.getToken); 
+
 </script>                                           
 
 <template>

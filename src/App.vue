@@ -1,20 +1,13 @@
 <script setup>
 import { useStore } from "vuex";
-import { computed } from '@vue/reactivity';
-import { provide, ref } from 'vue';
-import todoApi from "./api/todo.js";
 import Nav from "./components/Nav.vue";
+import { headersSetToken } from "./api/index.js";
+import { onMounted } from "vue";
 
-const todos = ref([]);
 const store = useStore();
 
-todoApi.getAll().then(todos => todos.value = todos);
+onMounted(() => headersSetToken(store.getters.getToken));
 
-const token = computed(() => {
-  return store.getters.getToken;
-})
-
-provide("todos", todos);
 </script>
 
 <template>

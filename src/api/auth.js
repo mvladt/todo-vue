@@ -1,12 +1,12 @@
-import { baseUrl, fetchPostJson } from "./index.js";
+import { fetchPostJson } from "./index.js";
 
-const url = baseUrl + "/auth";
+const baseUrl = "/auth";
 
 export default {
   async signin(user) {
-    return await fetchPostJson(`${url}/signin`, user);
+    return await fetchPostJson(`${baseUrl}/signin`, user);
   },
   async signup(user) {
-    return await fetchPostJson(`${url}/signup`, user);
+    return await fetchPostJson(`${baseUrl}/signup`, user);
   },
 };

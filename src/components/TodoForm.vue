@@ -4,10 +4,11 @@ import todoApi from "../api/todo.js";
 
 const text = ref("");
 const todos = inject("todos");
+const projectId = inject("currentProjectId")
 
 async function onSubmit() {
   let newTodo = { text: text.value, checked: false };
-  newTodo = await todoApi.save(newTodo);
+  newTodo = await todoApi.add(projectId.value, newTodo);
   todos.value.push(newTodo);
   text.value = "";
 }

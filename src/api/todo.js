@@ -1,18 +1,18 @@
-import { baseUrl, fetchGet, fetchPostJson, fetchPutJson, fetchDelete } from "./index.js";
+import { fetchGet, fetchPostJson, fetchPutJson, fetchDelete } from "./index.js";
 
-const url = baseUrl + "/todo";
+const baseUrl = "/todo";
 
 export default {
-  async getAll() {
-    return await fetchGet(url);
+  async getByProjectId(projectId) {
+    return await fetchGet(`${baseUrl}/${projectId}`);
   },
-  async save(newTodo) {
-    return await fetchPostJson(url, newTodo);
+  async add(projectId, newTodo) {
+    return await fetchPostJson(`${baseUrl}/${projectId}`, newTodo);
   },
   async remove(todoId) {
-    return await fetchDelete(`${url}/${todoId}`);
+    return await fetchDelete(`${baseUrl}/${todoId}`);
   },
   async update(todo) {
-    return await fetchPutJson(`${url}/${todo.id}`, todo);
+    return await fetchPutJson(`${baseUrl}/${todo._id}`, todo);
   },
 };

@@ -3,7 +3,6 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import authApi from "../api/auth.js";
-import { headersSetToken } from "../api/index.js";
 
 const store = useStore();
 const router = useRouter();
@@ -24,11 +23,10 @@ async function onSubmit() {
   const { message, token } = await authFunc(requestBody);
   if (token) {
     store.commit("setToken", token);
-    headersSetToken(token);
     alert(message);
     router.push("/");
   } else {
-    alert(message ?? "Ошибка");
+    alert(message ?? "Что-то пошло не так...");
   }
 }
 </script>

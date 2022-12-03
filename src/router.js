@@ -1,20 +1,20 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import store from "./store.js";
 
-import Todo from "./pages/Todo.vue";
-import AuthForm from "./pages/AuthForm.vue";
+import TodoPage from "./pages/TodoPage.vue";
+import AuthPage from "./pages/AuthPage.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: "/", component: Todo },
-    { path: "/signin", component: AuthForm },
-    { path: "/signup", component: AuthForm },
+    { path: "/", component: TodoPage },
+    { path: "/signin", component: AuthPage },
+    { path: "/signup", component: AuthPage },
     {
       path: "/signout",
-      component: Todo,
+      component: TodoPage,
       beforeEnter: () => {
-        store.commit("setToken", false);
+        store.commit("setToken", undefined);
         return "/signin";
       },
     },

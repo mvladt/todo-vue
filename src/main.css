@@ -1,13 +1,36 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+html {
+  --base: #617fbc;
+  --base-light: #e0ecfa;
+  --base-dark: #495f8a;
 
-* {
-  font-family: "Montserrat", sans-serif;
+  --base-text-light: #8592a5;
+
+  --base-font-size: 16px;
+
+  font-size: var(--base-font-size);
 }
 
-/* ui */
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
 
-input,
-button,
-select {
-  margin: 0.25rem;
+body,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+.wrapper {
+  width: 600px;
+  margin: 0 auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }

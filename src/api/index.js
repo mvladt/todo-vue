@@ -1,4 +1,4 @@
-export const baseUrl = "http://127.0.0.1:8000/api";
+export const BASE_URL = process.env.BASE_URL;
 
 const baseHeadersObj = {};
 
@@ -7,7 +7,7 @@ export function headersSetToken(token) {
 }
 
 export async function fetchGet(url) {
-  const response = await fetch(baseUrl + url, {
+  const response = await fetch(BASE_URL + url, {
     method: "GET",
     headers: new Headers(baseHeadersObj),
   });
@@ -15,7 +15,7 @@ export async function fetchGet(url) {
 }
 
 export async function fetchPostJson(url, jsonBody) {
-  const response = await fetch(baseUrl + url, {
+  const response = await fetch(BASE_URL + url, {
     method: "POST",
     body: JSON.stringify(jsonBody),
     headers: new Headers({
@@ -27,7 +27,7 @@ export async function fetchPostJson(url, jsonBody) {
 }
 
 export async function fetchPutJson(url, jsonBody) {
-  const response = await fetch(baseUrl + url, {
+  const response = await fetch(BASE_URL + url, {
     method: "PUT",
     body: JSON.stringify(jsonBody),
     headers: new Headers({
@@ -39,7 +39,7 @@ export async function fetchPutJson(url, jsonBody) {
 }
 
 export async function fetchDelete(url) {
-  const response = await fetch(baseUrl + url, {
+  const response = await fetch(BASE_URL + url, {
     method: "DELETE",
     headers: new Headers(baseHeadersObj),
   });

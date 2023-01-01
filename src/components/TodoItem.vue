@@ -24,9 +24,55 @@ async function onUpdate() {
 </script>
 
 <template>
-  <div>
-    <span>{{ todo.text }}</span>
+  <li class="item" :class="{ checked: todo.checked }">
     <input type="checkbox" v-model="todo.checked" @click="onUpdate" />
-    <input type="button" value="Delete" @click="onDelete" />
-  </div>
+    &nbsp;
+    <span>{{ todo.text }}</span>
+    &nbsp;
+    <button class="delete" @click="onDelete">&times;</button>
+  </li>
 </template>
+
+<style scoped>
+.item {
+  position: relative;
+  padding: 0.5rem;
+  color: var(--base);
+  text-align: center;
+  border: 1px solid var(--base-light);
+  border-radius: 8px;
+  background-color: var(--base-light);
+}
+
+.item:hover {
+  border: 1px solid var(--base);
+}
+
+.item.checked {
+  text-decoration: line-through;
+  color: darkgray;
+}
+
+.delete {
+  display: none;
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  height: 25px;
+  width: 25px;
+  border-radius: 35%;
+  border: none;
+  background-color: tomato;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.item:hover .delete {
+  display: block;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+</style>

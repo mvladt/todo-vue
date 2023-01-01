@@ -1,10 +1,11 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import store from "./store.js";
 
 import TodoPage from "./pages/TodoPage.vue";
 import AuthPage from "./pages/AuthPage.vue";
 
 const router = createRouter({
+  // history: createWebHistory(),
   history: createWebHashHistory(),
   routes: [
     { path: "/", component: TodoPage },
@@ -24,7 +25,7 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   const isAuth = store.getters.getToken;
   if (!isAuth && !["/signin", "/signup", "/signout"].includes(to.path)) {
-    alert("Необходимо авторизоваться");
+    alert("You need to log in");
     return "/signin";
   }
 });

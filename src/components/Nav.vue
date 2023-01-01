@@ -10,16 +10,37 @@ const token = computed(() => store.getters.getToken);
 </script>                                           
 
 <template>
-  <div id="navigation">
-    <RouterLink to="/">Todo</RouterLink> |
-    <span v-if="!token">
-      <RouterLink to="/signin">Signin</RouterLink> |
+  <nav class="nav">
+    <span v-if="!token && $route.path === '/signup'">
+      <RouterLink class="link" to="/signin">Signin</RouterLink>
     </span>
-    <span v-if="!token">
-      <RouterLink to="/signup">Signup</RouterLink> |
+    <span v-if="!token && $route.path === '/signin'">
+      <RouterLink class="link" to="/signup">Signup</RouterLink>
     </span>
     <span v-if="token">
-      <RouterLink to="/signout">Signout</RouterLink> |
+      <RouterLink class="link" to="/signout">Signout</RouterLink>
     </span>
-  </div>
+  </nav>
 </template>
+
+<style scoped>
+.nav {
+  width: var(--nav-width);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding-right: 2rem;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--base);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.link:hover {
+  color: var(--base-dark);
+}
+</style>

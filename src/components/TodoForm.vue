@@ -15,7 +15,33 @@ async function onSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
-    <input type="text" v-model="text" />
+  <form class="form wrapper" @submit.prevent="onSubmit">
+    <input class="input" type="text" v-model="text" />
   </form>
 </template>
+
+<style scoped>
+.form {
+  display: flex;
+}
+
+.input {
+  width: 100%;
+  display: block;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--base);
+  border: 2px solid var(--base-light);
+  border-radius: 8px;
+}
+
+.input::placeholder {
+  font-weight: 400;
+  color: var(--base-text-light);
+}
+
+.input:focus {
+  outline: 1px solid var(--base);
+}
+</style>

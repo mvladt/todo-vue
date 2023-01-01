@@ -1,4 +1,8 @@
 import { VueLoaderPlugin } from "vue-loader";
+import webpack from "webpack";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default {
   entry: "./src/main.js",
@@ -8,7 +12,6 @@ export default {
       directory: ".",
     },
   },
-  plugins: [new VueLoaderPlugin()],
   module: {
     rules: [
       {
@@ -18,7 +21,13 @@ export default {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
-      }
+      },
     ],
   },
+  plugins: [
+    new VueLoaderPlugin(),
+    new webpack.EnvironmentPlugin({
+      BASE_URL: process.env.BASE_URL,
+    }),
+  ],
 };

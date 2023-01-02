@@ -25,7 +25,7 @@ const token = computed(() => store.getters.getToken);
 
 <style scoped>
 .nav {
-  width: var(--nav-width);
+  /* width: var(--nav-width); */
   z-index: 5;
   display: flex;
   align-items: center;

@@ -1,10 +1,10 @@
 <script setup>
 import TodoForm from "../components/TodoForm.vue";
 import TodoList from "../components/TodoList.vue";
-import ProjectsComponent from "../components/ProjectsComponent.vue";
+import ProjectsMenu from "../components/ProjectsMenu.vue";
 import todoApi from "../api/todo.js";
 import projectApi from "../api/project.js";
-import { onMounted, provide, ref } from "vue";
+import { onMounted, inject, provide, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -12,6 +12,8 @@ const store = useStore();
 const projects = ref([]);
 const currentProjectId = ref("");
 const todos = ref([]);
+
+const isMenuActive = inject("isMenuActive");
 
 onMounted(async () => {
   if (store.getters.getToken) {
@@ -23,6 +25,7 @@ onMounted(async () => {
 
 async function handleSelectChange(projectId) {
   currentProjectId.value = projectId;
+  isMenuActive.value = false;
   todos.value = await todoApi.getByProjectId(currentProjectId.value);
 }
 
@@ -47,7 +50,8 @@ provide("currentProjectId", currentProjectId);
 </script>
 
 <template>
-  <ProjectsComponent :projects="projects" :value="currentProjectId" @change="handleSelectChange" @add="handleAddProject" />
+  <ProjectsMenu :active="isMenuActive" :projects="projects" :value="currentProjectId" @change="handleSelectChange"
+    @add="handleAddProject" />
   <TodoForm />
   <TodoList />
 </template>

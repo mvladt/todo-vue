@@ -1,17 +1,20 @@
 <script setup>
+import useIsMobile from "../composition/useIsMobile.js";
 import ProjectItem from "./ProjectItem.vue";
 
 const emit = defineEmits(["change", "add"]);
-const { projects, value } = defineProps(["projects", "value"]);
+const { active, projects, value } = defineProps(["active", "projects", "value"]);
 
 function handleChange(projectId) {
   emit("change", projectId);
 }
 
+const isMobile = useIsMobile();
+
 </script>
 
 <template>
-  <div class="projects">
+  <div class="projects" v-if="active || !isMobile" :class="{ mobile: isMobile }">
     <ProjectItem v-for="p in projects" :key="p._id" :project="p" @change="handleChange" />
 
     <button class="add" @click="emit('add')">
@@ -23,8 +26,19 @@ function handleChange(projectId) {
 </template>
 
 <style scoped>
+.projects.mobile {
+  background-color: rgb(250, 252, 255);
+  border-left: 1px solid var(--base-light);
+  height: 100vh;
+  margin-top: -1.5rem;
+  padding-top: 1.5rem;
+  padding-right: 1rem;
+  
+}
+
 .projects {
   position: fixed;
+  z-index: 5;
 }
 
 .add {

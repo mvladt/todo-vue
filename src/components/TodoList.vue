@@ -14,9 +14,15 @@ const todos = inject("todos");
 
 <style scoped>
 .list {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 0;
   gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

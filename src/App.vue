@@ -1,18 +1,28 @@
 <script setup>
+// TODO: удаление проектов, иконка signout, выпадающее меню, адаптив
+// TODO: провести анализ зависимостей, сделать рефакторинг
 import { useStore } from "vuex";
 import Nav from "./components/Nav.vue";
+import Burger from "./components/Burger.vue"
 import { headersSetToken } from "./api/index.js";
-import { onMounted } from "vue";
+import { onMounted, ref, provide } from "vue";
+import useIsMobile from "./composition/useIsMobile";
 
 const store = useStore();
 
 onMounted(() => headersSetToken(store.getters.getToken));
 
-// TODO: удаление проектов, иконка signout, выпадающее меню, адаптив
+const isMenuActive = ref(false);
+const isMobile = useIsMobile();
+
+provide("isMenuActive", isMenuActive);
+
 </script>
 
 <template>
   <header class="header">
+    <div v-if="!isMobile"></div>
+    <Burger v-else @click="isMenuActive = !isMenuActive" />
     <h1 class="title">To Do</h1>
     <Nav />
   </header>
@@ -25,16 +35,14 @@ onMounted(() => headersSetToken(store.getters.getToken));
 </template>
 
 <style>
-:root {
-  --nav-width: 200px;
-}
-
 #app {
+  /* --nav-width: 200px; */
+
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 1.5rem;
-  padding-top: 1rem;
+  /* padding-top: 1rem; */
 }
 
 .header {
@@ -43,17 +51,18 @@ onMounted(() => headersSetToken(store.getters.getToken));
   z-index: 3;
   color: var(--base);
   background-color: var(--base-light);
-  text-align: center;
+  /* text-align: center; */
 
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
 
 }
 
 .header .title {
   height: 3rem;
   line-height: 3rem;
-  margin-right: calc(-1 * var(--nav-width));
+  text-align: center;
+  /* margin-right: calc(-1 * var(--nav-width)); */
 }
 
 .main {

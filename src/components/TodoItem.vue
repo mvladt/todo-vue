@@ -35,6 +35,7 @@ async function onUpdate() {
 
 <style scoped>
 .item {
+  width: 100%;
   position: relative;
   padding: 0.5rem;
   color: var(--base);

@@ -23,6 +23,7 @@ async function onSubmit() {
 <style scoped>
 .form {
   display: flex;
+  width: 100%;
 }
 
 .input {

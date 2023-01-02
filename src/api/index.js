@@ -1,3 +1,5 @@
+// TODO: рефакторинг api (в синглтон)
+
 export const BASE_URL = process.env.BASE_URL;
 
 const baseHeadersObj = {};

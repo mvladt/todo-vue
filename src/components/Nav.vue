@@ -1,13 +1,14 @@
 <script setup>
-import { computed } from '@vue/reactivity';
-import { useStore } from 'vuex';
+import { computed } from "@vue/reactivity";
+import { useStore } from "vuex";
 
 const store = useStore();
 
 // TODO: как сделать computed из стороннего js-объекта, например из кастомного стора
-const token = computed(() => store.getters.getToken); 
-
-</script>                                           
+const token = computed(() => {
+  return store.getters.getToken;
+});
+</script>
 
 <template>
   <nav class="nav">
@@ -18,14 +19,13 @@ const token = computed(() => store.getters.getToken);
       <RouterLink class="link" to="/signup">Signup</RouterLink>
     </span>
     <span v-if="token">
-      <RouterLink class="link" to="/signout">Signout</RouterLink>
+      <RouterLink class="link" to="/signout" title="Exit the App">Signout</RouterLink>
     </span>
   </nav>
 </template>
 
 <style scoped>
 .nav {
-  /* width: var(--nav-width); */
   z-index: 5;
   display: flex;
   align-items: center;

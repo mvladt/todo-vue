@@ -1,15 +1,22 @@
 <script setup>
 import { inject } from "vue";
+import todoApi from "../api/todo.js";
 
-const emit = defineEmits(["change"]);
 const { project } = defineProps(["project"]);
 
 const currentId = inject("currentProjectId");
+const isMenuActive = inject("isMenuActive");
+const todos = inject("todos");
 
+async function handleChange() {
+  currentId.value = project._id;
+  isMenuActive.value = false;
+  todos.value = await todoApi.getByProjectId(currentId.value);
+}
 </script>
 
 <template>
-  <button class="item button" :class="{ active: currentId == project._id }" @click="emit('change', project._id)">
+  <button class="item button" :class="{ active: currentId == project._id }" @click="handleChange">
     <div class="cube"></div>
     {{ project.name }}
   </button>

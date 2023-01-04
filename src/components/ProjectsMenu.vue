@@ -1,23 +1,41 @@
 <script setup>
+import { inject } from "vue";
 import useIsMobile from "../composition/useIsMobile.js";
 import ProjectItem from "./ProjectItem.vue";
+import projectApi from "../api/project.js";
 
-const emit = defineEmits(["change", "add"]);
-const { active, projects, value } = defineProps(["active", "projects", "value"]);
-
-function handleChange(projectId) {
-  emit("change", projectId);
-}
-
+const isMenuActive = inject("isMenuActive");
 const isMobile = useIsMobile();
 
+const projects = inject("projects");
+
+async function handleAddProject() {
+  const newProjectName = prompt("New Project name:");
+
+  if (newProjectName.length > 15) {
+    alert("The project name must not exceed 15 characters");
+    return;
+  }
+
+  const newProject = await projectApi.add(newProjectName);
+  if (!newProject.error) {
+    projects.value.push(newProject);
+  } else {
+    console.log(newProject.message);
+  }
+}
 </script>
 
 <template>
-  <div class="projects" v-if="active || !isMobile" :class="{ mobile: isMobile }">
-    <ProjectItem v-for="p in projects" :key="p._id" :project="p" @change="handleChange" />
+  <div class="projects" v-if="isMenuActive || !isMobile" :class="{ mobile: isMobile }">
+    <ProjectItem
+      v-for="p in projects"
+      :key="p._id"
+      :project="p"
+      :title="'Project \'' + p.name + '\''"
+    />
 
-    <button class="add" @click="emit('add')">
+    <button class="add" @click="handleAddProject" title="New Project">
       <svg class="svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
         <path class="path" d="M300 0H200V200H0V300H200V500H300V300H500V200H300V0Z" />
       </svg>
@@ -33,7 +51,6 @@ const isMobile = useIsMobile();
   margin-top: -1.5rem;
   padding-top: 1.5rem;
   padding-right: 1rem;
-  
 }
 
 .projects {
@@ -52,13 +69,12 @@ const isMobile = useIsMobile();
   background-color: var(--base-light);
   cursor: pointer;
   padding: 0;
-  margin-left: calc(0.5rem + 6px);
-  margin-top: 1rem;
+  margin-left: 1.5rem;
+  margin-top: 1.3rem;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .svg {

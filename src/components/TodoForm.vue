@@ -16,7 +16,7 @@ async function onSubmit() {
 
 <template>
   <form class="form wrapper" @submit.prevent="onSubmit">
-    <input class="input" type="text" v-model="text" />
+    <input class="input" type="text" v-model="text" placeholder="Write your todo..." autofocus />
   </form>
 </template>
 

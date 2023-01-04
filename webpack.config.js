@@ -1,5 +1,5 @@
 import { VueLoaderPlugin } from "vue-loader";
-import HtmlWebpackPlugin from "html-webpack-plugin"; 
+import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
 import dotenv from "dotenv";
 import path from "path";
@@ -37,6 +37,10 @@ export default {
     new VueLoaderPlugin(),
     new webpack.EnvironmentPlugin({
       BASE_URL: process.env.BASE_URL,
+    }),
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: false,
+      __VUE_PROD_DEVTOOLS__: false,
     }),
     new HtmlWebpackPlugin({
       template: path.join(dirname, "index.html"),

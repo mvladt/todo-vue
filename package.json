@@ -2,8 +2,8 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "webpack-dev-server --mode=development",
-    "build": "webpack --mode=production"
+    "dev": "set NODE_ENV=development & webpack-dev-server --mode=development",
+    "build": "set NODE_ENV=production & webpack --mode=production"
   },
   "dependencies": {
     "vue": "^3.2.41",
@@ -11,6 +11,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.2",
     "dotenv": "^16.0.3",
     "html-webpack-plugin": "^5.5.0",

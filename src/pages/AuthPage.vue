@@ -14,13 +14,13 @@ import AuthForm from "../components/AuthForm.vue";
 
 <style scoped>
 .form-wrapper {
-  margin-top: -5rem; /* Для красоты */
+  margin-top: 20vh;
 
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 }
 

@@ -4,9 +4,10 @@ import store from "./store.js";
 import TodoPage from "./pages/TodoPage.vue";
 import AuthPage from "./pages/AuthPage.vue";
 
+const BASE_URL = process.env.BASE_URL;
+
 const router = createRouter({
-  // history: createWebHistory(),
-  history: createWebHashHistory(),
+  history: createWebHistory(BASE_URL),
   routes: [
     { path: "/", component: TodoPage },
     { path: "/signin", component: AuthPage },

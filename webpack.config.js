@@ -4,6 +4,7 @@ import webpack from "webpack";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import CopyPlugin from "copy-webpack-plugin";
 
 dotenv.config();
 
@@ -14,12 +15,10 @@ export default {
   output: {
     filename: "bundle.js",
     path: path.join(dirname, "docs"),
+    publicPath: "/todo-vue/",
   },
   devServer: {
-    port: 9000,
-    static: {
-      directory: ".",
-    },
+    port: 3001,
   },
   module: {
     rules: [
@@ -36,6 +35,7 @@ export default {
   plugins: [
     new VueLoaderPlugin(),
     new webpack.EnvironmentPlugin({
+      API_URL: process.env.API_URL,
       BASE_URL: process.env.BASE_URL,
     }),
     new webpack.DefinePlugin({
@@ -43,7 +43,12 @@ export default {
       __VUE_PROD_DEVTOOLS__: false,
     }),
     new HtmlWebpackPlugin({
-      template: path.join(dirname, "index.html"),
+      template: path.join(dirname, "public", "index.html"),
+    }),
+    new CopyPlugin({
+      patterns: [
+        path.join(dirname, "public", "service-worker.js"), // Копирует скрипт в папку сборки
+      ],
     }),
   ],
 };

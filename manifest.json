@@ -1,0 +1,35 @@
+{
+  "name": "todo-vue",
+  "theme_color": "#617fbc",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/todo-vue/",
+  "start_url": "/todo-vue/",
+  "icons": [
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "284x284",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

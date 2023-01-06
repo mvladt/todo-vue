@@ -15,10 +15,11 @@ export default {
   output: {
     filename: "bundle.js",
     path: path.join(dirname, "docs"),
-    publicPath: "/todo-vue/",
+    publicPath: "/todo-vue",
   },
   devServer: {
     port: 3001,
+    open: ["/todo-vue"],
   },
   module: {
     rules: [
@@ -44,10 +45,15 @@ export default {
     }),
     new HtmlWebpackPlugin({
       template: path.join(dirname, "public", "index.html"),
+      favicon: path.join(dirname, "assets", "logo.svg"),
     }),
+
+    // Копирует файлы в папку сборки / дев-сервер
     new CopyPlugin({
       patterns: [
-        path.join(dirname, "public", "service-worker.js"), // Копирует скрипт в папку сборки
+        path.join(dirname, "public", "service-worker.js"),
+        path.join(dirname, "manifest.json"),
+        { from: path.join(dirname, "assets", "icons"), to: "icons" },
       ],
     }),
   ],

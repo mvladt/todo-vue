@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "set NODE_ENV=development & webpack-dev-server --mode=development",
-    "build": "set NODE_ENV=production & webpack --mode=production"
+    "build": "set NODE_ENV=production & webpack --mode=production & copy docs\\index.html docs\\404.html"
   },
   "dependencies": {
     "vue": "^3.2.41",

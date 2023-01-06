@@ -45,7 +45,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       template: path.join(dirname, "public", "index.html"),
-      favicon: path.join(dirname, "assets", "logo.svg"),
+      favicon: path.join(dirname, "assets", "icon.svg"),
     }),
 
     // Копирует файлы в папку сборки / дев-сервер

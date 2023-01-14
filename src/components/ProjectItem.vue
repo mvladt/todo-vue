@@ -8,7 +8,7 @@ const currentId = inject("currentProjectId");
 const isMenuActive = inject("isMenuActive");
 const todos = inject("todos");
 
-async function handleChange() {
+async function onChange() {
   currentId.value = project._id;
   isMenuActive.value = false;
   todos.value = await todoApi.getByProjectId(currentId.value);
@@ -16,7 +16,7 @@ async function handleChange() {
 </script>
 
 <template>
-  <button class="item button" :class="{ active: currentId == project._id }" @click="handleChange">
+  <button class="item button" :class="{ active: currentId == project._id }" @click="onChange">
     <div class="cube"></div>
     {{ project.name }}
   </button>

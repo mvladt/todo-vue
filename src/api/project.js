@@ -1,6 +1,6 @@
 import { fetchGet, fetchPostJson } from "./index.js";
 
-const baseUrl = "/project";
+const baseUrl = "/project/";
 
 export default {
   async getAll() {

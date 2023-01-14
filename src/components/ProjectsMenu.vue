@@ -8,8 +8,9 @@ const isMenuActive = inject("isMenuActive");
 const isMobile = useIsMobile();
 
 const projects = inject("projects");
+const currentProjectId = inject("currentProjectId");
 
-async function handleAddProject() {
+async function onAddProject() {
   const newProjectName = prompt("New Project name:");
 
   if (newProjectName.length > 15) {
@@ -18,8 +19,11 @@ async function handleAddProject() {
   }
 
   const newProject = await projectApi.add(newProjectName);
+
+  // TODO: странная конструкция
   if (!newProject.error) {
     projects.value.push(newProject);
+    currentProjectId.value = newProject._id;
   } else {
     console.log(newProject.message);
   }
@@ -29,13 +33,15 @@ async function handleAddProject() {
 <template>
   <div class="projects" v-if="isMenuActive || !isMobile" :class="{ mobile: isMobile }">
     <ProjectItem
+      v-if="projects.length"
       v-for="p in projects"
       :key="p._id"
       :project="p"
       :title="'Project \'' + p.name + '\''"
     />
+    <div class="message" v-else>No projects yet...</div>
 
-    <button class="add" @click="handleAddProject" title="New Project">
+    <button class="add" @click="onAddProject" title="New Project">
       <svg class="svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
         <path class="path" d="M300 0H200V200H0V300H200V500H300V300H500V200H300V0Z" />
       </svg>
@@ -56,6 +62,11 @@ async function handleAddProject() {
 .projects {
   position: fixed;
   z-index: 5;
+}
+
+.message {
+  color: var(--base);
+  margin-left: 2rem;
 }
 
 .add {

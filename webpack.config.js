@@ -36,8 +36,9 @@ export default {
   plugins: [
     new VueLoaderPlugin(),
     new webpack.EnvironmentPlugin({
-      API_URL: process.env.API_URL,
+      API_BASE_URL: process.env.API_BASE_URL,
       BASE_URL: process.env.BASE_URL,
+      VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY,
     }),
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: false,

@@ -26,7 +26,7 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   const isAuth = store.getters.getToken;
   if (!isAuth && !["/signin", "/signup", "/signout"].includes(to.path)) {
-    alert("You need to log in");
+    console.error("You need to log in");
     return "/signin";
   }
 });

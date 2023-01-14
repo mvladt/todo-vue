@@ -30,3 +30,16 @@ self.addEventListener("install", async (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(cacheFirst(event.request));
 });
+
+self.addEventListener("push", (event) => {
+  if (event.data) {
+    console.log("This push event has data: ", event.data.text());
+    const notification = event.data.json().notification;
+    const promiseChain = self.registration.showNotification(notification.title, {
+      body: notification.body,
+    });
+    event.waitUntil(promiseChain);
+  } else {
+    console.log("This push event has no data.");
+  }
+});

@@ -1,18 +1,19 @@
 <script setup>
-import { inject } from "vue";
+import { inject, onMounted, ref } from "vue";
 import todoApi from "../api/todo.js";
+import TodoOptions from "../components/TodoOptions.vue";
+import useOnWindowClick from "../composition/useOnWindowClick.js";
+import { postSubscription, makePushMessage, subscribeUserToPush } from "../api/push.js";
 
-const props = defineProps({
-  todo: {
-    type: Object,
-    required: true,
-  }
-});
+const props = defineProps(["todo"]);
 const todos = inject("todos");
+
+const isHover = ref(false);
+const isActive = ref(false);
 
 async function onDelete() {
   await todoApi.remove(props.todo._id);
-  todos.value = todos.value.filter(todo => todo._id !== props.todo._id);
+  todos.value = todos.value.filter((todo) => todo._id !== props.todo._id);
 }
 
 async function onUpdate() {
@@ -21,15 +22,48 @@ async function onUpdate() {
     checked: !props.todo.checked,
   });
 }
+
+async function onSetTimer() {
+  isActive.value = isHover.value = false;
+
+  if (["denied", "default"].includes(Notification.permission)) {
+    if ((await Notification.requestPermission()) !== "granted") return;
+  }
+  const pushSubscription = await subscribeUserToPush();
+  console.log(JSON.stringify(pushSubscription));
+  postSubscription(pushSubscription).catch((error) => console.log(error));
+
+  makePushMessage(props.todo.text).catch((error) => console.log(error));
+}
+
+onMounted(() => {
+  useOnWindowClick(() => {
+    if (!isHover.value) {
+      isActive.value = false;
+    }
+  });
+});
 </script>
 
 <template>
-  <li class="item" :class="{ checked: todo.checked }">
+  <li
+    class="item"
+    :class="{ checked: todo.checked, hover: isHover || isActive }"
+    @mouseover="isHover = true"
+    @mouseleave="isHover = false"
+  >
     <input type="checkbox" v-model="todo.checked" @click="onUpdate" />
     &nbsp;
     <span>{{ todo.text }}</span>
     &nbsp;
-    <button class="delete" @click="onDelete">&times;</button>
+
+    <TodoOptions
+      :display="isHover || isActive"
+      :is-active="isActive"
+      @active="isActive = !isActive"
+      @delete="onDelete"
+      @timer="onSetTimer"
+    />
   </li>
 </template>
 
@@ -45,35 +79,12 @@ async function onUpdate() {
   background-color: var(--base-light);
 }
 
-.item:hover {
+.item.hover {
   border: 1px solid var(--base);
 }
 
 .item.checked {
   text-decoration: line-through;
   color: darkgray;
-}
-
-.delete {
-  display: none;
-  position: absolute;
-  top: -7px;
-  right: -7px;
-  height: 25px;
-  width: 25px;
-  border-radius: 35%;
-  border: none;
-  background-color: tomato;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.item:hover .delete {
-  display: block;
-}
-
-input[type="checkbox"] {
-  cursor: pointer;
 }
 </style>

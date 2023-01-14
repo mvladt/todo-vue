@@ -2,8 +2,7 @@
 import TodoForm from "../components/TodoForm.vue";
 import TodoList from "../components/TodoList.vue";
 import ProjectsMenu from "../components/ProjectsMenu.vue";
-import todoApi from "../api/todo.js";
-import projectApi from "../api/project.js";
+import api from "../api/index.js";
 import { onMounted, provide, ref } from "vue";
 import { useStore } from "vuex";
 
@@ -15,9 +14,9 @@ const currentProjectId = ref("");
 
 onMounted(async () => {
   if (store.getters.getToken) {
-    projects.value = await projectApi.getAll();
+    projects.value = await api.project.getAll();
     currentProjectId.value = projects.value[0]._id;
-    todos.value = await todoApi.getByProjectId(currentProjectId.value);
+    todos.value = await api.todo.getByProjectId(currentProjectId.value);
   }
 });
 

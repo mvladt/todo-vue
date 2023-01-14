@@ -1,9 +1,8 @@
 <script setup>
 import { inject, onMounted, ref } from "vue";
-import todoApi from "../api/todo.js";
 import TodoOptions from "../components/TodoOptions.vue";
 import useOnWindowClick from "../composition/useOnWindowClick.js";
-import { postSubscription, makePushMessage, subscribeUserToPush } from "../api/push.js";
+import api from "../api/index.js";
 
 const props = defineProps(["todo"]);
 const todos = inject("todos");
@@ -12,12 +11,12 @@ const isHover = ref(false);
 const isActive = ref(false);
 
 async function onDelete() {
-  await todoApi.remove(props.todo._id);
+  await api.todo.remove(props.todo._id);
   todos.value = todos.value.filter((todo) => todo._id !== props.todo._id);
 }
 
 async function onUpdate() {
-  await todoApi.update({
+  await api.todo.update({
     _id: props.todo._id,
     checked: !props.todo.checked,
   });
@@ -29,11 +28,11 @@ async function onSetTimer() {
   if (["denied", "default"].includes(Notification.permission)) {
     if ((await Notification.requestPermission()) !== "granted") return;
   }
-  const pushSubscription = await subscribeUserToPush();
+  const pushSubscription = await api.push.subscribeUserToPush();
   console.log(JSON.stringify(pushSubscription));
-  postSubscription(pushSubscription).catch((error) => console.log(error));
+  api.push.postSubscription(pushSubscription);
 
-  makePushMessage(props.todo.text).catch((error) => console.log(error));
+  api.push.makePushMessage(props.todo.text);
 }
 
 onMounted(() => {

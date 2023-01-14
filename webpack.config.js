@@ -15,11 +15,16 @@ export default {
   output: {
     filename: "bundle.js",
     path: path.join(dirname, "docs"),
-    publicPath: "/todo-vue",
+    publicPath: "/todo-vue/",
   },
   devServer: {
     port: 3001,
-    open: ["/todo-vue"],
+    static: {
+      publicPath: "/todo-vue/",
+    },
+    proxy: {
+      "/": `http://localhost:${3001}/${process.env.BASE_URL}/`,
+    },
   },
   module: {
     rules: [

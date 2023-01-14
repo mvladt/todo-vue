@@ -1,14 +1,14 @@
 <script setup>
-import { inject, ref } from 'vue';
-import todoApi from "../api/todo.js";
+import { inject, ref } from "vue";
+import api from "../api/index.js";
 
 const text = ref("");
 const todos = inject("todos");
-const projectId = inject("currentProjectId")
+const projectId = inject("currentProjectId");
 
 async function onSubmit() {
   let newTodo = { text: text.value, checked: false };
-  newTodo = await todoApi.add(projectId.value, newTodo);
+  newTodo = await api.todo.add(projectId.value, newTodo);
   todos.value.push(newTodo);
   text.value = "";
 }

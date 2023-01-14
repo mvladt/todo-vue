@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { headersSetToken } from "./api/index.js";
+import api from "./api/index.js";
 
 const store = createStore({
   state: {
@@ -20,7 +20,7 @@ const store = createStore({
       } else {
         localStorage.removeItem("token");
       }
-      headersSetToken(token);
+      api.setToken(token);
     },
   },
 });

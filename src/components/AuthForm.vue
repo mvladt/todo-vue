@@ -2,15 +2,15 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import authApi from "../api/auth.js";
+import api from "../api/index.js";
 
 const router = useRouter();
 const store = useStore();
 
 const authFunction = computed(() => {
   const routePath = router.currentRoute.value.path;
-  if (routePath === "/signin") return authApi.signin;
-  if (routePath === "/signup") return authApi.signup;
+  if (routePath === "/signin") return api.auth.signin;
+  if (routePath === "/signup") return api.auth.signup;
 });
 
 const username = ref("");

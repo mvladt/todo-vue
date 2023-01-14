@@ -24,7 +24,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  const isAuth = store.getters.getToken;
+  const isAuth = store.getters.getToken; // TODO: А где валидация токена?
   if (!isAuth && !["/signin", "/signup", "/signout"].includes(to.path)) {
     console.error("You need to log in");
     return "/signin";

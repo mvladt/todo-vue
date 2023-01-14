@@ -1,6 +1,6 @@
 <script setup>
 import { inject } from "vue";
-import todoApi from "../api/todo.js";
+import api from "../api/index.js";
 
 const { project } = defineProps(["project"]);
 
@@ -11,7 +11,7 @@ const todos = inject("todos");
 async function onChange() {
   currentId.value = project._id;
   isMenuActive.value = false;
-  todos.value = await todoApi.getByProjectId(currentId.value);
+  todos.value = await api.todo.getByProjectId(currentId.value);
 }
 </script>
 

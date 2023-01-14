@@ -2,7 +2,7 @@
 import { inject } from "vue";
 import useIsMobile from "../composition/useIsMobile.js";
 import ProjectItem from "./ProjectItem.vue";
-import projectApi from "../api/project.js";
+import api from "../api/index.js";
 
 const isMenuActive = inject("isMenuActive");
 const isMobile = useIsMobile();
@@ -18,7 +18,7 @@ async function onAddProject() {
     return;
   }
 
-  const newProject = await projectApi.add(newProjectName);
+  const newProject = await api.project.add(newProjectName);
 
   // TODO: странная конструкция
   if (!newProject.error) {

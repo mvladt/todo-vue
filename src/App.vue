@@ -4,12 +4,12 @@
 import { useStore } from "vuex";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
-import { headersSetToken } from "./api/index.js";
+import api from "./api/index.js";
 import { onMounted, ref, provide } from "vue";
 
 const store = useStore();
 
-onMounted(() => headersSetToken(store.getters.getToken));
+onMounted(() => api.setToken(store.getters.getToken));
 
 const isMenuActive = ref(false);
 provide("isMenuActive", isMenuActive);
